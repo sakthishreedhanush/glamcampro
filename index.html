@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>THEGLAMCAMPRO — Ultra Slow-Motion Cinematography</title>
+    <meta name="description" content="Ultra slow-motion video production studio. Capturing every moment at 1000 FPS with stunning cinematic detail. A Focus Sports Media foundation." />
+    
+    <!-- Google Fonts — Luxury Pairing -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              display: ['Cormorant Garamond', 'Georgia', 'serif'],
+              body: ['Inter', 'system-ui', 'sans-serif']
+            },
+            colors: {
+              gold: {
+                DEFAULT: '#c8a97e',
+                light: '#d4ba94',
+                dark: '#a88b62',
+                muted: 'rgba(200, 169, 126, 0.12)',
+              },
+              surface: {
+                DEFAULT: '#0a0a0a',
+                card: '#111111',
+                elevated: '#161616',
+                border: 'rgba(255, 255, 255, 0.08)',
+              }
+            }
+          }
+        }
+      }
+    </script>
+  </head>
+  <body class="bg-[#0a0a0a] text-neutral-100 antialiased selection:bg-gold/30 selection:text-white">
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

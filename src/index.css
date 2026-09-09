@@ -1,0 +1,255 @@
+/* ============================================
+   THEGLAMCAMPRO — Luxury Design System
+   Palette: True Black + Champagne Gold + Warm Neutrals
+   Fonts:  Cormorant Garamond (display) + Inter (body)
+   ============================================ */
+
+/* --- Keyframe Animations — Subtle Only --- */
+
+@keyframes fadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes revealLine {
+  0% { transform: scaleX(0); }
+  100% { transform: scaleX(1); }
+}
+
+@keyframes equalizer {
+  0%, 100% { height: 3px; }
+  50% { height: 14px; }
+}
+
+/* --- Design Tokens --- */
+
+:root {
+  --bg-black: #0a0a0a;
+  --bg-card: #111111;
+  --bg-elevated: #161616;
+  --border: rgba(255, 255, 255, 0.08);
+  --border-hover: rgba(255, 255, 255, 0.16);
+  --gold: #c8a97e;
+  --gold-light: #d4ba94;
+  --gold-dark: #a88b62;
+  --gold-muted: rgba(200, 169, 126, 0.12);
+  --text-primary: #f0ece6;
+  --text-secondary: #8a8578;
+  --text-tertiary: #5a5549;
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+}
+
+/* --- Global Reset & Base --- */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: var(--bg-black);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  overflow-x: hidden;
+  background: var(--bg-black);
+  min-height: 100vh;
+}
+
+/* --- Custom Scrollbar --- */
+
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-black);
+}
+::-webkit-scrollbar-thumb {
+  background: #222;
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #333;
+}
+
+/* --- Typography Helpers --- */
+
+.font-display {
+  font-family: var(--font-display);
+}
+.font-body {
+  font-family: var(--font-body);
+}
+
+/* --- Hero Heading — Luxury Serif --- */
+
+.hero-heading {
+  font-family: var(--font-display);
+  font-size: clamp(48px, 8.5vw, 110px);
+  font-weight: 300;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  animation: fadeUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
+}
+
+.hero-heading em {
+  font-style: italic;
+  color: var(--gold);
+}
+
+.hero-subtitle {
+  font-family: var(--font-body);
+  font-size: clamp(14px, 1.8vw, 17px);
+  color: var(--text-secondary);
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  line-height: 1.75;
+  max-width: 520px;
+  animation: fadeUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.35s both;
+}
+
+.hero-fade-up {
+  animation: fadeUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.55s both;
+}
+
+/* --- Navigation --- */
+
+.nav-scrolled {
+  background: rgba(10, 10, 10, 0.92);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-bottom: 1px solid var(--border);
+}
+
+/* --- Cards — Clean & Minimal --- */
+
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  transition: border-color 0.5s ease, transform 0.5s ease;
+}
+
+.card:hover {
+  border-color: var(--border-hover);
+  transform: translateY(-2px);
+}
+
+/* --- Video Card Overlay --- */
+
+.video-overlay {
+  background: linear-gradient(180deg, transparent 50%, rgba(10, 10, 10, 0.9) 100%);
+}
+
+/* --- Button Styles — Understated Luxury --- */
+
+.btn-primary {
+  background: var(--gold);
+  color: #0a0a0a;
+  font-weight: 500;
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border-radius: 0;
+  padding: 0.9rem 2rem;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  cursor: pointer;
+  border: none;
+  font-family: var(--font-body);
+}
+
+.btn-primary:hover {
+  background: var(--gold-light);
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--text-primary);
+  border: 1px solid var(--border-hover);
+  font-weight: 400;
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border-radius: 0;
+  padding: 0.9rem 2rem;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  cursor: pointer;
+  font-family: var(--font-body);
+}
+
+.btn-secondary:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+/* --- Equalizer Bars --- */
+
+.equalizer-bar {
+  width: 2px;
+  background: var(--gold);
+  border-radius: 1px;
+  animation: equalizer 1.2s ease-in-out infinite alternate;
+}
+.equalizer-bar:nth-child(1) { animation-delay: 0.1s; }
+.equalizer-bar:nth-child(2) { animation-delay: 0.3s; }
+.equalizer-bar:nth-child(3) { animation-delay: 0.5s; }
+
+/* --- Section Divider --- */
+
+.section-divider {
+  height: 1px;
+  background: var(--border);
+  width: 100%;
+}
+
+/* --- Accent Text --- */
+
+.text-accent {
+  color: var(--gold);
+}
+
+/* --- Luxury Label --- */
+
+.label {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+
+.label-gold {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
