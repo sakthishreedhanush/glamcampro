@@ -42,7 +42,15 @@ export default function Footer({ onOpenBookModal }) {
           <div className="space-y-5">
             <span className="label">Contact</span>
             <div className="flex flex-col gap-3 text-sm text-neutral-500">
-              <span>palfocussports@gmail.com</span>
+              <a href="mailto:palfocussports@gmail.com" className="hover:text-white transition-colors">palfocussports@gmail.com</a>
+              <a 
+                href="https://wa.me/15550199234?text=Hi%20GlamCam%20Pro%20Team!%20I'd%20like%20to%20inquire%20about%20booking%20a%201000%20FPS%20Glambot%20session." 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="hover:text-[#25D366] transition-colors flex items-center gap-2"
+              >
+                <span>WhatsApp Direct Inquiry</span>
+              </a>
               <span>Vancouver, Canada</span>
             </div>
           </div>

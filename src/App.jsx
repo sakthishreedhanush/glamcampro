@@ -4,6 +4,7 @@ import Footer from './components/Footer';
 import ShowreelModal from './components/ShowreelModal';
 import ProjectModal from './components/ProjectModal';
 import BookCallModal from './components/BookCallModal';
+import WhatsAppButton from './components/WhatsAppButton';
 
 import Home from './pages/Home';
 import Work from './pages/Work';
@@ -95,6 +96,9 @@ export default function App() {
         isOpen={bookModalOpen}
         onClose={() => setBookModalOpen(false)}
       />
+
+      {/* Floating WhatsApp Action Button */}
+      <WhatsAppButton />
 
     </div>
   );
