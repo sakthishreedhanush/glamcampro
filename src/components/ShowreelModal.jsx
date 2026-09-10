@@ -87,6 +87,7 @@ export default function ShowreelModal({ isOpen, onClose }) {
             autoPlay
             loop
             muted={isMuted}
+            playsInline
             className="w-full h-full object-cover"
           />
         </div>

@@ -21,7 +21,7 @@ export default function Work({ onSelectProject, onOpenBookModal }) {
       </div>
 
       {/* Projects Grid */}
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4 pt-6 border-t border-white/5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 pt-6 border-t border-white/5">
         {PROJECTS.map((project) => (
           <div
             key={project.id}

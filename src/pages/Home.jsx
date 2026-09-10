@@ -22,10 +22,10 @@ export default function Home({ onOpenShowreel, onSelectProject, onOpenBookModal,
             We transform ordinary moments into cinematic experiences using precision Glambot technology and stunning slow-motion detail.
           </p>
 
-          <div className="flex flex-wrap items-center gap-4 pt-4 hero-fade-up">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 pt-4 hero-fade-up">
             <button
               onClick={() => setActiveTab('work')}
-              className="btn-primary text-[11px] py-4 px-8"
+              className="btn-primary text-[11px] py-4 px-8 justify-center w-full sm:w-auto"
             >
               <span>View Work</span>
               <ArrowUpRight className="w-3.5 h-3.5" />
@@ -33,9 +33,9 @@ export default function Home({ onOpenShowreel, onSelectProject, onOpenBookModal,
 
             <button
               onClick={onOpenShowreel}
-              className="btn-secondary text-[11px] py-4 px-8"
+              className="btn-secondary text-[11px] py-4 px-8 justify-center w-full sm:w-auto"
             >
-              <Play className="w-3 h-3 fill-current" />
+              <Play className="w-3 h-3 fill-current text-[#c8a97e]" />
               <span>Watch Reel</span>
             </button>
           </div>
@@ -43,8 +43,8 @@ export default function Home({ onOpenShowreel, onSelectProject, onOpenBookModal,
       </section>
 
       {/* HERO VIDEO REELS */}
-      <section className="max-w-7xl mx-auto px-6 md:px-12 pb-32">
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
+      <section className="max-w-7xl mx-auto px-6 md:px-12 pb-20 md:pb-32">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           {[
             './Sahil01_Glamcam_final.mp4',
             './AMANDA REEL7 GLAMBOT .mp4',
@@ -65,8 +65,8 @@ export default function Home({ onOpenShowreel, onSelectProject, onOpenBookModal,
                   preload="metadata"
                   className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-[1.2s] ease-out"
                 />
-                <div className="absolute inset-0 video-overlay opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <div className="absolute bottom-0 left-0 right-0 p-5 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-500">
+                <div className="absolute inset-0 video-overlay opacity-100 sm:opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="absolute bottom-0 left-0 right-0 p-5 opacity-100 sm:opacity-0 group-hover:opacity-100 translate-y-0 sm:translate-y-2 group-hover:translate-y-0 transition-all duration-500">
                   <span className="text-[11px] tracking-[0.14em] uppercase text-neutral-300 font-medium">
                     Reel {String(i + 1).padStart(2, '0')}
                   </span>

@@ -73,6 +73,14 @@ body {
   overflow-x: hidden;
   background: var(--bg-black);
   min-height: 100vh;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Prevent auto-zooming on iOS Safari when focusing form inputs */
+@media (max-width: 768px) {
+  input, select, textarea {
+    font-size: 16px !important;
+  }
 }
 
 /* --- Custom Scrollbar --- */
