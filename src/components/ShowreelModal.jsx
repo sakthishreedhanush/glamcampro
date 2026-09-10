@@ -11,25 +11,25 @@ export default function ShowreelModal({ isOpen, onClose }) {
     {
       id: "sahil-glamcam",
       title: "Brand Reel 2026",
-      videoUrl: "/Sahil01_Glamcam_final.mp4",
+      videoUrl: "./Sahil01_Glamcam_final.mp4",
       duration: "0:45",
     },
     {
       id: "amanda-reel",
       title: "Motion Showcase",
-      videoUrl: "/AMANDA REEL7 GLAMBOT .mp4",
+      videoUrl: "./AMANDA REEL7 GLAMBOT .mp4",
       duration: "0:38",
     },
     {
       id: "basketball-reel",
       title: "Campaign Reel",
-      videoUrl: "/BASKETBALL REEL 2 GALMBOT.mp4",
+      videoUrl: "./BASKETBALL REEL 2 GALMBOT.mp4",
       duration: "0:52",
     },
     {
       id: "sukhleen-reel",
       title: "Creative Cut",
-      videoUrl: "/SUKHLEEN  REEL 444 GLAMBOT.mp4",
+      videoUrl: "./SUKHLEEN  REEL 444 GLAMBOT.mp4",
       duration: "0:30",
     }
   ];

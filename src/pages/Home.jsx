@@ -46,9 +46,9 @@ export default function Home({ onOpenShowreel, onSelectProject, onOpenBookModal,
       <section className="max-w-7xl mx-auto px-6 md:px-12 pb-32">
         <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
           {[
-            '/Sahil01_Glamcam_final.mp4',
-            '/AMANDA REEL7 GLAMBOT .mp4',
-            '/BASKETBALL REEL 2 GALMBOT.mp4'
+            './Sahil01_Glamcam_final.mp4',
+            './AMANDA REEL7 GLAMBOT .mp4',
+            './BASKETBALL REEL 2 GALMBOT.mp4'
           ].map((src, i) => (
             <div
               key={i}

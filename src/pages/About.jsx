@@ -92,7 +92,7 @@ export default function About({ onOpenBookModal }) {
             <h4 className="font-display text-2xl text-white font-light tracking-wide">Focus Sports Media</h4>
             <p className="text-sm text-neutral-500 mt-1">Parent Media & Production Foundation</p>
           </div>
-          <img src="/focus sports media parent logo.jpeg" alt="Focus Sports Media" className="h-12 object-contain opacity-80 hover:opacity-100 transition-opacity" />
+          <img src="./focus sports media parent logo.jpeg" alt="Focus Sports Media" className="h-12 object-contain opacity-80 hover:opacity-100 transition-opacity" />
         </div>
       </div>
 
