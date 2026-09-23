@@ -1,43 +1,108 @@
-import React from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { PROJECTS, SERVICES } from '../data/mockData';
 import { Play, ArrowUpRight, ArrowRight } from 'lucide-react';
 
-export default function Home({ onOpenShowreel, onSelectProject, onOpenBookModal, setActiveTab }) {
+function InlineReelVideo({ src, poster, className = "", loopDuration }) {
+  const videoRef = useRef(null);
+  const [loadFailed, setLoadFailed] = useState(false);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    video.muted = true;
+    video.defaultMuted = true;
+    const playPromise = video.play();
+    if (playPromise !== undefined) {
+      playPromise.catch(() => {});
+    }
+  }, [src]);
+
+  const handleTimeUpdate = (e) => {
+    if (loopDuration && e.currentTarget.currentTime >= loopDuration) {
+      e.currentTarget.currentTime = 0;
+      if (e.currentTarget.paused) {
+        e.currentTarget.play().catch(() => {});
+      }
+    }
+  };
+
+  if (loadFailed) {
+    return (
+      <img
+        src={poster || "/cambot.jpeg"}
+        alt="Reel preview"
+        className={className}
+      />
+    );
+  }
 
   return (
-    <div className="pt-28 pb-24">
+    <video
+      ref={videoRef}
+      src={src}
+      poster={poster}
+      autoPlay
+      loop
+      muted
+      defaultMuted
+      playsInline
+      webkit-playsinline="true"
+      disablePictureInPicture
+      controlsList="nodownload nofullscreen noremoteplayback"
+      preload="auto"
+      onTimeUpdate={handleTimeUpdate}
+      onError={() => setLoadFailed(true)}
+      className={className}
+    />
+  );
+}
+
+export default function Home({ onOpenShowreel, onSelectProject, onOpenBookModal }) {
+
+  const scrollToWork = () => {
+    const el = document.getElementById('work');
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  return (
+    <div className="pb-24">
 
       {/* HERO */}
-      <section className="max-w-7xl mx-auto px-6 md:px-12 pt-12 md:pt-24 pb-32 md:pb-44">
-        <div className="max-w-5xl space-y-10">
+      <section className="relative w-full overflow-hidden pt-32 md:pt-40 pb-28 md:pb-40 border-b border-white/5">
+        {/* HERO BACKGROUND VIDEO */}
+        <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none select-none">
+          <InlineReelVideo
+            src="/BASKETBALL_REEL_2_GLAMBOT.mp4"
+            poster="/glambot_2.jpeg"
+            loopDuration={5}
+            className="w-full h-full object-cover opacity-60 scale-105"
+          />
+        </div>
+        
+        {/* GRADIENT OVERLAYS FOR HIGH CONTRAST & LUXURY FEEL */}
+        <div className="absolute inset-0 z-0 bg-gradient-to-r from-[#070711] via-[#070711]/85 to-[#070711]/40 md:to-[#070711]/30 pointer-events-none" />
+        <div className="absolute inset-0 z-0 bg-gradient-to-t from-[#070711] via-transparent to-[#070711]/80 pointer-events-none" />
+        <div className="absolute inset-0 z-0 bg-[radial-gradient(ellipse_at_top_right,rgba(200,169,126,0.12),transparent_70%)] pointer-events-none" />
 
-          <span className="label-gold">Ultra Slow-Motion Cinematography</span>
+        {/* HERO CONTENT */}
+        <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12">
+          <div className="max-w-3xl space-y-8 md:space-y-10">
 
-          <h1 className="hero-heading">
-            Capturing every<br />
-            moment at <em>1000 FPS</em>
-          </h1>
+            <span className="label-gold inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-[#c8a97e]/10 border border-[#c8a97e]/20 backdrop-blur-md">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#c8a97e] animate-pulse" />
+              Ultra Slow-Motion Cinematography
+            </span>
 
-          <p className="hero-subtitle">
-            We transform ordinary moments into cinematic experiences using precision Glambot technology and stunning slow-motion detail.
-          </p>
+            <h1 className="hero-heading">
+              Capturing every<br />
+              moment with <em>Glamcam</em>
+            </h1>
 
-          <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 pt-4 hero-fade-up">
-            <button
-              onClick={() => setActiveTab('work')}
-              className="btn-primary text-[11px] py-4 px-8 justify-center w-full sm:w-auto"
-            >
-              <span>View Work</span>
-              <ArrowUpRight className="w-3.5 h-3.5" />
-            </button>
-
-            <button
-              onClick={onOpenShowreel}
-              className="btn-secondary text-[11px] py-4 px-8 justify-center w-full sm:w-auto"
-            >
-              <Play className="w-3 h-3 fill-current text-[#c8a97e]" />
-              <span>Watch Reel</span>
-            </button>
+            <p className="hero-subtitle text-neutral-300 max-w-xl text-lg md:text-xl font-light leading-relaxed">
+              We transform ordinary moments into cinematic experiences using precision Glamcam technology and stunning slow-motion detail.
+            </p>
           </div>
         </div>
       </section>
@@ -46,96 +111,53 @@ export default function Home({ onOpenShowreel, onSelectProject, onOpenBookModal,
       <section className="max-w-7xl mx-auto px-6 md:px-12 pb-20 md:pb-32">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           {[
-            './Sahil01_Glamcam_final.mp4',
-            './AMANDA REEL7 GLAMBOT .mp4',
-            './BASKETBALL REEL 2 GALMBOT.mp4'
-          ].map((src, i) => (
+            { src: '/AMANDA_REEL7_GLAMBOT.mp4', poster: '/glambot_1.jpeg' },
+            { src: '/BASKETBALL_REEL_2_GLAMBOT.mp4', poster: '/glambot_2.jpeg' },
+            { src: '/SUKHLEEN_REEL_444_GLAMBOT.mp4', poster: '/glambot_3.jpeg' }
+          ].map((item, i) => (
             <div
               key={i}
-              onClick={onOpenShowreel}
-              className="relative overflow-hidden group cursor-pointer bg-[#111]"
+              className="relative overflow-hidden bg-[#111]"
             >
               <div className="relative aspect-[9/16] w-full overflow-hidden">
-                <video
-                  src={src}
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  preload="metadata"
-                  className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-[1.2s] ease-out"
+                <InlineReelVideo
+                  src={item.src}
+                  poster={item.poster}
+                  className="w-full h-full object-cover pointer-events-none select-none"
                 />
-                <div className="absolute inset-0 video-overlay opacity-100 sm:opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <div className="absolute bottom-0 left-0 right-0 p-5 opacity-100 sm:opacity-0 group-hover:opacity-100 translate-y-0 sm:translate-y-2 group-hover:translate-y-0 transition-all duration-500">
-                  <span className="text-[11px] tracking-[0.14em] uppercase text-neutral-300 font-medium">
-                    Reel {String(i + 1).padStart(2, '0')}
-                  </span>
-                </div>
               </div>
             </div>
           ))}
         </div>
       </section>
 
-      {/* DIVIDER — TAGLINE */}
-      <section className="border-y border-white/5 py-14 md:py-20">
-        <div className="max-w-7xl mx-auto px-6 md:px-12">
-          <p className="text-center font-display text-2xl md:text-3xl lg:text-4xl font-light tracking-[0.08em] uppercase text-neutral-600">
-            A Focus Sports Media Foundation
+      {/* BRAND STATEMENT */}
+      <section className="max-w-7xl mx-auto px-6 md:px-12 py-24 md:py-36 border-b border-white/5">
+        <div className="max-w-4xl mx-auto text-center space-y-8 md:space-y-10">
+          
+          <span className="label-gold inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-[#c8a97e]/10 border border-[#c8a97e]/20 backdrop-blur-md">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#c8a97e]" />
+            The Experience
+          </span>
+
+          <h2 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light text-white tracking-tight uppercase leading-[1.1]">
+            Make Every Moment <em className="text-[#c8a97e] italic">Cinematic</em>
+          </h2>
+
+          <p className="font-display text-xl sm:text-2xl md:text-3xl font-light text-neutral-300 max-w-3xl mx-auto leading-relaxed tracking-wide">
+            An extraordinary slow-motion experience, designed to be seen, shared and remembered.
+          </p>
+
+          <div className="w-16 h-[1px] bg-[#c8a97e]/40 mx-auto my-6" />
+
+          <p className="text-sm md:text-base text-neutral-400 max-w-2xl mx-auto leading-relaxed font-light">
+            Step into the spotlight and experience the magic of cinematic slow motion. From weddings and celebrations to sports and brand activations, The Glam Cam Pro transforms ordinary moments into extraordinary visual experiences—crafted to captivate, connect and be shared.
           </p>
         </div>
       </section>
 
-      {/* WHAT WE DO */}
-      <section className="max-w-7xl mx-auto px-6 md:px-12 py-32 md:py-44">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-20">
-
-          {/* Left — Heading */}
-          <div className="lg:col-span-4 lg:sticky lg:top-32 self-start">
-            <span className="label-gold mb-6 block">What we do</span>
-            <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-light text-white leading-[1.1] tracking-tight mb-6">
-              Precision meets<br /><em className="text-[#c8a97e] italic">artistry</em>
-            </h2>
-            <p className="text-sm text-neutral-500 leading-relaxed max-w-sm">
-              From creative direction to final delivery, we handle every frame with meticulous care.
-            </p>
-          </div>
-
-          {/* Right — Services */}
-          <div className="lg:col-span-8 space-y-0">
-            {SERVICES.map((service, index) => (
-              <div
-                key={service.id}
-                className="py-12 border-b border-white/5 first:border-t first:border-white/5"
-              >
-                <div className="flex items-baseline justify-between mb-6">
-                  <div className="flex items-baseline gap-6">
-                    <span className="font-display text-3xl md:text-4xl font-light text-neutral-700">
-                      {service.num}
-                    </span>
-                    <h3 className="font-display text-2xl md:text-3xl font-normal text-white">
-                      {service.title}
-                    </h3>
-                  </div>
-                </div>
-                <p className="text-sm text-neutral-500 leading-relaxed max-w-xl mb-6">
-                  {service.description}
-                </p>
-                <div className="flex flex-wrap gap-x-6 gap-y-2">
-                  {service.deliverables.slice(0, 4).map((item, idx) => (
-                    <span key={idx} className="text-[12px] text-neutral-400 tracking-wide">
-                      {item}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* FEATURED WORK */}
-      <section className="max-w-7xl mx-auto px-6 md:px-12 pb-32">
+      <section id="work" className="max-w-7xl mx-auto px-6 md:px-12 pb-32">
         <div className="flex items-end justify-between mb-14 pb-8 border-b border-white/5">
           <div>
             <span className="label-gold mb-4 block">Selected Work</span>
@@ -143,46 +165,28 @@ export default function Home({ onOpenShowreel, onSelectProject, onOpenBookModal,
               Recent projects
             </h2>
           </div>
-          <button
-            onClick={() => setActiveTab('work')}
-            className="hidden md:flex items-center gap-2 text-[11px] tracking-[0.12em] uppercase font-medium text-neutral-500 hover:text-white transition-colors"
-          >
-            <span>View all</span>
-            <ArrowRight className="w-3.5 h-3.5" />
-          </button>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
-          {PROJECTS.slice(0, 4).map((project, index) => (
+        <div className="grid grid-cols-2 gap-3 sm:gap-6 max-w-5xl mx-auto">
+          {PROJECTS.map((project) => (
             <div
               key={project.id}
-              onClick={() => onSelectProject(project)}
-              className="relative overflow-hidden group cursor-pointer bg-[#111]"
+              className="relative overflow-hidden bg-[#111]"
             >
               <div className="relative aspect-[9/16] w-full overflow-hidden">
                 {project.videoUrl ? (
-                  <video
+                  <InlineReelVideo
                     src={project.videoUrl}
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                    preload="metadata"
-                    className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-[1.2s] ease-out"
+                    poster={project.coverImage}
+                    className="w-full h-full object-cover pointer-events-none select-none"
                   />
                 ) : (
                   <img
                     src={project.coverImage}
                     alt={project.title}
-                    className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-[1.2s] ease-out"
+                    className="w-full h-full object-cover select-none"
                   />
                 )}
-                <div className="absolute inset-0 video-overlay opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <div className="absolute bottom-0 left-0 right-0 p-5 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-500">
-                  <span className="font-display text-lg text-white font-normal">
-                    {project.title}
-                  </span>
-                </div>
               </div>
             </div>
           ))}

@@ -20,7 +20,7 @@ if (!fs.existsSync(BOOKINGS_FILE)) {
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: process.env.EMAIL_USER || 'palfocussports@gmail.com',
+    user: process.env.EMAIL_USER || 'palfsmediapro@gmail.com',
     pass: process.env.EMAIL_PASS || '' // Your Gmail App Password
   }
 });
@@ -63,9 +63,9 @@ app.post('/api/book', async (req, res) => {
     console.error('Error writing to bookings.json:', err);
   }
 
-  // 2. Dispatch email to palfocussports@gmail.com via FormSubmit
+  // 2. Dispatch email to palfsmediapro@gmail.com via FormSubmit
   try {
-    await fetch("https://formsubmit.co/ajax/palfocussports@gmail.com", {
+    await fetch("https://formsubmit.co/ajax/palfsmediapro@gmail.com", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -82,7 +82,7 @@ app.post('/api/book', async (req, res) => {
         "Submitted At": new Date().toLocaleString()
       })
     });
-    console.log(`[EMAIL DISPATCHED] Booking details sent to palfocussports@gmail.com`);
+    console.log(`[EMAIL DISPATCHED] Booking details sent to palfsmediapro@gmail.com`);
   } catch (emailErr) {
     console.warn('FormSubmit email dispatch warning:', emailErr);
   }
@@ -91,11 +91,11 @@ app.post('/api/book', async (req, res) => {
   if (process.env.EMAIL_PASS) {
     try {
       await transporter.sendMail({
-        from: '"GlamCam Pro Studio" <palfocussports@gmail.com>',
-        to: 'palfocussports@gmail.com',
-        subject: `✨ New Glambot Booking Request from ${name}`,
+        from: '"GlamCam Pro Studio" <palfsmediapro@gmail.com>',
+        to: 'palfsmediapro@gmail.com',
+        subject: `✨ New Glamcam Booking Request from ${name}`,
         html: `
-          <h2>New Glambot Booking Request</h2>
+          <h2>New Glamcam Booking Request</h2>
           <table border="1" cellpadding="8" cellspacing="0" style="border-collapse: collapse;">
             <tr><td><strong>Client Name</strong></td><td>${name}</td></tr>
             <tr><td><strong>Phone / WhatsApp</strong></td><td>${contact}</td></tr>
@@ -105,7 +105,7 @@ app.post('/api/book', async (req, res) => {
           </table>
         `
       });
-      console.log(`[SMTP DISPATCHED] Email sent via Nodemailer to palfocussports@gmail.com`);
+      console.log(`[SMTP DISPATCHED] Email sent via Nodemailer to palfsmediapro@gmail.com`);
     } catch (smtpErr) {
       console.warn('SMTP Nodemailer dispatch warning:', smtpErr.message);
     }
@@ -113,12 +113,12 @@ app.post('/api/book', async (req, res) => {
 
   return res.json({
     success: true,
-    message: 'Booking details received and dispatched to palfocussports@gmail.com',
+    message: 'Booking details received and dispatched to palfsmediapro@gmail.com',
     booking: newBooking
   });
 });
 
 app.listen(PORT, () => {
   console.log(`🚀 GlamCam Pro Backend Server running at http://localhost:${PORT}`);
-  console.log(`📩 Target email inbox: palfocussports@gmail.com`);
+  console.log(`📩 Target email inbox: palfsmediapro@gmail.com`);
 });

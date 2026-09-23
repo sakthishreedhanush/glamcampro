@@ -30,9 +30,25 @@ export default function BookCallModal({ isOpen, onClose }) {
       console.warn('LocalStorage save warning:', err);
     }
 
+    // 1. Attempt local backend save if running
     try {
-      // Send directly to palfocussports@gmail.com using FormSubmit API
-      const response = await fetch("https://formsubmit.co/ajax/palfocussports@gmail.com", {
+      await fetch("/api/book", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formData.name,
+          contact: formData.contact,
+          email: formData.email,
+          message: formData.message
+        })
+      });
+    } catch (_) {
+      // Static host or backend server offline, proceed to FormSubmit
+    }
+
+    try {
+      // 2. Dispatch directly to palfsmediapro@gmail.com using FormSubmit API
+      const response = await fetch("https://formsubmit.co/ajax/palfsmediapro@gmail.com", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -50,25 +66,25 @@ export default function BookCallModal({ isOpen, onClose }) {
         })
       });
 
-      const result = await response.json();
+      const result = await response.json().catch(() => ({}));
 
-      if (response.ok || result.success === "true" || result.success === true) {
+      if (response.ok || result.success === "true" || result.success === true || (result.message && result.message.toLowerCase().includes('activation'))) {
         setSubmitted(true);
       } else {
-        // Backup attempt using Web3Forms if FormSubmit is unreachable
-        const fallbackRes = await fetch("https://api.web3forms.com/submit", {
+        // Fallback attempt using Web3Forms if FormSubmit is unreachable
+        await fetch("https://api.web3forms.com/submit", {
           method: "POST",
           headers: { "Content-Type": "application/json", Accept: "application/json" },
           body: JSON.stringify({
             access_key: "a8d2983a-4efb-4b21-8eb1-4d37c8cbcf60",
             subject: `✨ New GlamCam Pro Booking Request from ${formData.name}`,
-            to_email: "palfocussports@gmail.com",
+            to_email: "palfsmediapro@gmail.com",
             name: formData.name,
             contact: formData.contact,
             email: formData.email,
             message: `Client Name: ${formData.name}\nContact: ${formData.contact}\nEmail: ${formData.email}\nDetails: ${formData.message}`
           })
-        });
+        }).catch(() => {});
         setSubmitted(true);
       }
     } catch (error) {
@@ -86,8 +102,8 @@ export default function BookCallModal({ isOpen, onClose }) {
     onClose();
   };
 
-  const mailtoUrl = `mailto:palfocussports@gmail.com?subject=${encodeURIComponent(`Glambot Booking - ${formData.name}`)}&body=${encodeURIComponent(
-    `Hi GlamCam Pro Team,\n\nI would like to book a Glambot session.\n\nName: ${formData.name}\nPhone/WhatsApp: ${formData.contact}\nEmail: ${formData.email}\nDetails: ${formData.message}\n`
+  const mailtoUrl = `mailto:palfsmediapro@gmail.com?subject=${encodeURIComponent(`Glamcam Booking - ${formData.name}`)}&body=${encodeURIComponent(
+    `Hi GlamCam Pro Team,\n\nI would like to book a Glamcam session.\n\nName: ${formData.name}\nPhone/WhatsApp: ${formData.contact}\nEmail: ${formData.email}\nDetails: ${formData.message}\n`
   )}`;
 
   const inputClasses = "w-full px-4 py-3.5 bg-[#111] border border-white/8 text-white text-sm focus:border-[#c8a97e]/50 focus:outline-none transition-colors font-body";
@@ -99,7 +115,7 @@ export default function BookCallModal({ isOpen, onClose }) {
         
         {/* Header */}
         <div className="flex items-center justify-between px-8 py-5 border-b border-white/5 flex-shrink-0">
-          <span className="label-gold">Book a Glambot Session</span>
+          <span className="label-gold">Book a Glamcam Session</span>
           <button
             onClick={resetForm}
             className="text-neutral-500 hover:text-white transition-colors"
@@ -122,7 +138,7 @@ export default function BookCallModal({ isOpen, onClose }) {
                   Booking Submitted!
                 </h3>
                 <p className="text-sm text-neutral-400 max-w-md mx-auto leading-relaxed">
-                  Thank you, <strong className="text-white">{formData.name}</strong>. Your booking details have been sent to <span className="text-[#c8a97e]">palfocussports@gmail.com</span>. We will contact you shortly via WhatsApp or Email.
+                  Thank you, <strong className="text-white">{formData.name}</strong>. Your booking details have been sent to <span className="text-[#c8a97e]">palfsmediapro@gmail.com</span>. We will contact you shortly via WhatsApp or Email.
                 </p>
               </div>
 
@@ -220,7 +236,7 @@ export default function BookCallModal({ isOpen, onClose }) {
               {/* Action Buttons */}
               <div className="pt-2 flex items-center justify-between">
                 <span className="text-[11px] text-neutral-500">
-                  Direct recipient: <span className="text-neutral-400">palfocussports@gmail.com</span>
+                  Direct recipient: <span className="text-neutral-400">palfsmediapro@gmail.com</span>
                 </span>
 
                 <button 

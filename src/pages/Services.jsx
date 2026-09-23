@@ -7,7 +7,7 @@ export default function Services({ onOpenBookModal }) {
   const [timelineSpeed, setTimelineSpeed] = useState('standard');
 
   const estimatorServices = [
-    { id: 'Capture', name: '1000 FPS Glambot On-Site Shoot', price: 3500, weeks: 1 },
+    { id: 'Capture', name: '1000 FPS Glamcam On-Site Shoot', price: 3500, weeks: 1 },
     { id: 'Cinematography', name: 'Post-Production & Speed Ramping', price: 2000, weeks: 1 },
     { id: 'Lighting', name: 'Studio Lighting & High-Speed Rigs', price: 1500, weeks: 1 }
   ];

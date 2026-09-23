@@ -1,5 +1,50 @@
-import React from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { PROJECTS } from '../data/mockData';
+
+function InlineReelVideo({ src, poster, className = "" }) {
+  const videoRef = useRef(null);
+  const [loadFailed, setLoadFailed] = useState(false);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    video.muted = true;
+    video.defaultMuted = true;
+    const playPromise = video.play();
+    if (playPromise !== undefined) {
+      playPromise.catch(() => {});
+    }
+  }, [src]);
+
+  if (loadFailed) {
+    return (
+      <img
+        src={poster || "/cambot.jpeg"}
+        alt="Reel preview"
+        className={className}
+      />
+    );
+  }
+
+  return (
+    <video
+      ref={videoRef}
+      src={src}
+      poster={poster}
+      autoPlay
+      loop
+      muted
+      defaultMuted
+      playsInline
+      webkit-playsinline="true"
+      disablePictureInPicture
+      controlsList="nodownload nofullscreen noremoteplayback"
+      preload="auto"
+      onError={() => setLoadFailed(true)}
+      className={className}
+    />
+  );
+}
 
 export default function Work({ onSelectProject, onOpenBookModal }) {
 
@@ -21,37 +66,26 @@ export default function Work({ onSelectProject, onOpenBookModal }) {
       </div>
 
       {/* Projects Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 pt-6 border-t border-white/5">
+      <div className="grid grid-cols-2 gap-3 sm:gap-6 max-w-5xl mx-auto pt-6 border-t border-white/5">
         {PROJECTS.map((project) => (
           <div
             key={project.id}
-            onClick={() => onSelectProject(project)}
-            className="relative overflow-hidden group cursor-pointer bg-[#111]"
+            className="relative overflow-hidden bg-[#111]"
           >
             <div className="relative aspect-[9/16] w-full overflow-hidden">
               {project.videoUrl ? (
-                <video
+                <InlineReelVideo
                   src={project.videoUrl}
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  preload="metadata"
-                  className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-[1.2s] ease-out"
+                  poster={project.coverImage}
+                  className="w-full h-full object-cover pointer-events-none select-none"
                 />
               ) : (
                 <img
                   src={project.coverImage}
                   alt={project.title}
-                  className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-[1.2s] ease-out"
+                  className="w-full h-full object-cover select-none"
                 />
               )}
-              <div className="absolute inset-0 video-overlay opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <div className="absolute bottom-0 left-0 right-0 p-5 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-500">
-                <span className="font-display text-lg text-white font-normal">
-                  {project.title}
-                </span>
-              </div>
             </div>
           </div>
         ))}
