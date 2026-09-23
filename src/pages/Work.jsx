@@ -1,50 +1,7 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React from 'react';
 import { PROJECTS } from '../data/mockData';
-
-function InlineReelVideo({ src, poster, className = "" }) {
-  const videoRef = useRef(null);
-  const [loadFailed, setLoadFailed] = useState(false);
-
-  useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
-    video.muted = true;
-    video.defaultMuted = true;
-    const playPromise = video.play();
-    if (playPromise !== undefined) {
-      playPromise.catch(() => {});
-    }
-  }, [src]);
-
-  if (loadFailed) {
-    return (
-      <img
-        src={poster || "/cambot.jpeg"}
-        alt="Reel preview"
-        className={className}
-      />
-    );
-  }
-
-  return (
-    <video
-      ref={videoRef}
-      src={src}
-      poster={poster}
-      autoPlay
-      loop
-      muted
-      defaultMuted
-      playsInline
-      webkit-playsinline="true"
-      disablePictureInPicture
-      controlsList="nodownload nofullscreen noremoteplayback"
-      preload="auto"
-      onError={() => setLoadFailed(true)}
-      className={className}
-    />
-  );
-}
+import InlineReelVideo from '../components/InlineReelVideo';
+import { getAssetUrl } from '../utils/assets';
 
 export default function Work({ onSelectProject, onOpenBookModal }) {
 

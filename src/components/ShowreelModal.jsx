@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { X, Volume2, VolumeX, Play, Pause } from 'lucide-react';
+import { getAssetUrl } from '../utils/assets';
 
 export default function ShowreelModal({ isOpen, onClose, initialIndex = 0 }) {
   const [currentReelIndex, setCurrentReelIndex] = useState(initialIndex);
@@ -11,19 +12,19 @@ export default function ShowreelModal({ isOpen, onClose, initialIndex = 0 }) {
     {
       id: "amanda-reel",
       title: "Amanda Reel",
-      videoUrl: "./AMANDA_REEL7_GLAMBOT.mp4",
+      videoUrl: getAssetUrl("AMANDA_REEL7_GLAMBOT.mp4"),
       duration: "0:38",
     },
     {
       id: "basketball-reel",
       title: "Basketball Reel",
-      videoUrl: "./BASKETBALL_REEL_2_GLAMBOT.mp4",
+      videoUrl: getAssetUrl("BASKETBALL_REEL_2_GLAMBOT.mp4"),
       duration: "0:52",
     },
     {
       id: "sukhleen-reel",
       title: "Sukhleen Reel",
-      videoUrl: "./SUKHLEEN_REEL_444_GLAMBOT.mp4",
+      videoUrl: getAssetUrl("SUKHLEEN_REEL_444_GLAMBOT.mp4"),
       duration: "0:30",
     }
   ];

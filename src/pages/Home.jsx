@@ -1,61 +1,8 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React from 'react';
 import { PROJECTS, SERVICES } from '../data/mockData';
 import { Play, ArrowUpRight, ArrowRight } from 'lucide-react';
-
-function InlineReelVideo({ src, poster, className = "", loopDuration }) {
-  const videoRef = useRef(null);
-  const [loadFailed, setLoadFailed] = useState(false);
-
-  useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
-    video.muted = true;
-    video.defaultMuted = true;
-    const playPromise = video.play();
-    if (playPromise !== undefined) {
-      playPromise.catch(() => {});
-    }
-  }, [src]);
-
-  const handleTimeUpdate = (e) => {
-    if (loopDuration && e.currentTarget.currentTime >= loopDuration) {
-      e.currentTarget.currentTime = 0;
-      if (e.currentTarget.paused) {
-        e.currentTarget.play().catch(() => {});
-      }
-    }
-  };
-
-  if (loadFailed) {
-    return (
-      <img
-        src={poster || "/cambot.jpeg"}
-        alt="Reel preview"
-        className={className}
-      />
-    );
-  }
-
-  return (
-    <video
-      ref={videoRef}
-      src={src}
-      poster={poster}
-      autoPlay
-      loop
-      muted
-      defaultMuted
-      playsInline
-      webkit-playsinline="true"
-      disablePictureInPicture
-      controlsList="nodownload nofullscreen noremoteplayback"
-      preload="auto"
-      onTimeUpdate={handleTimeUpdate}
-      onError={() => setLoadFailed(true)}
-      className={className}
-    />
-  );
-}
+import InlineReelVideo from '../components/InlineReelVideo';
+import { getAssetUrl } from '../utils/assets';
 
 export default function Home({ onOpenShowreel, onSelectProject, onOpenBookModal }) {
 
@@ -74,8 +21,8 @@ export default function Home({ onOpenShowreel, onSelectProject, onOpenBookModal 
         {/* HERO BACKGROUND VIDEO */}
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none select-none">
           <InlineReelVideo
-            src="/BASKETBALL_REEL_2_GLAMBOT.mp4"
-            poster="/glambot_2.jpeg"
+            src={getAssetUrl("BASKETBALL_REEL_2_GLAMBOT.mp4")}
+            poster={getAssetUrl("glambot_2.jpeg")}
             loopDuration={5}
             className="w-full h-full object-cover opacity-60 scale-105"
           />
@@ -111,9 +58,9 @@ export default function Home({ onOpenShowreel, onSelectProject, onOpenBookModal 
       <section className="max-w-7xl mx-auto px-6 md:px-12 pb-20 md:pb-32">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           {[
-            { src: '/AMANDA_REEL7_GLAMBOT.mp4', poster: '/glambot_1.jpeg' },
-            { src: '/BASKETBALL_REEL_2_GLAMBOT.mp4', poster: '/glambot_2.jpeg' },
-            { src: '/SUKHLEEN_REEL_444_GLAMBOT.mp4', poster: '/glambot_3.jpeg' }
+            { src: getAssetUrl('AMANDA_REEL7_GLAMBOT.mp4'), poster: getAssetUrl('glambot_1.jpeg') },
+            { src: getAssetUrl('BASKETBALL_REEL_2_GLAMBOT.mp4'), poster: getAssetUrl('glambot_2.jpeg') },
+            { src: getAssetUrl('SUKHLEEN_REEL_444_GLAMBOT.mp4'), poster: getAssetUrl('glambot_3.jpeg') }
           ].map((item, i) => (
             <div
               key={i}

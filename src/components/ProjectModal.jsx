@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { X, Volume2, VolumeX } from 'lucide-react';
+import { getAssetUrl } from '../utils/assets';
 
 export default function ProjectModal({ project, onClose, onOpenBookModal }) {
   const [isMuted, setIsMuted] = useState(false);
@@ -57,7 +58,8 @@ export default function ProjectModal({ project, onClose, onOpenBookModal }) {
           {project.videoUrl ? (
             <video
               ref={videoRef}
-              src={project.videoUrl}
+              src={getAssetUrl(project.videoUrl)}
+              poster={getAssetUrl(project.coverImage)}
               autoPlay
               loop
               muted={isMuted}
@@ -69,7 +71,7 @@ export default function ProjectModal({ project, onClose, onOpenBookModal }) {
             />
           ) : (
             <img
-              src={project.coverImage}
+              src={getAssetUrl(project.coverImage)}
               alt={project.title}
               className="w-full h-full object-cover"
             />
