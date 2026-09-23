@@ -21,10 +21,10 @@ export default function Home({ onOpenShowreel, onSelectProject, onOpenBookModal 
         {/* HERO BACKGROUND VIDEO */}
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none select-none">
           <InlineReelVideo
-            src={getAssetUrl("BASKETBALL_REEL_2_GLAMBOT.mp4")}
-            poster={getAssetUrl("glambot_2.jpeg")}
+            src="BASKETBALL_REEL_2_GLAMBOT.mp4"
+            poster="glambot_2.jpeg"
             loopDuration={5}
-            className="w-full h-full object-cover opacity-60 scale-105"
+            className="w-full h-full object-cover opacity-75 scale-105"
           />
         </div>
         

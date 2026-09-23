@@ -1,6 +1,6 @@
 /**
- * Safely resolves an asset path considering Vite's base URL (e.g. for GitHub Pages).
- * Ensures paths resolve properly whether deployed to root domain, subpath, or local dev.
+ * Safely resolves an asset path considering Vite's base URL and GitHub Pages deployment.
+ * Guarantees paths work with or without trailing slashes and across localhost and GitHub Pages.
  */
 export function getAssetUrl(path) {
   if (!path) return '';
@@ -13,8 +13,23 @@ export function getAssetUrl(path) {
     return path;
   }
 
-  // Strip leading '/' or './'
-  const cleanPath = path.replace(/^(\.\/|\/)/, '');
-  const base = import.meta.env.BASE_URL || './';
-  return base.endsWith('/') ? `${base}${cleanPath}` : `${base}/${cleanPath}`;
+  // Strip any leading '/', './', or repeated 'glamcampro/'
+  let cleanPath = path.replace(/^(\.\/|\/)/, '');
+  if (cleanPath.startsWith('glamcampro/')) {
+    cleanPath = cleanPath.slice('glamcampro/'.length);
+  }
+
+  // In the browser, check if we are on GitHub Pages
+  if (typeof window !== 'undefined') {
+    if (
+      window.location.hostname.includes('github.io') ||
+      window.location.pathname.startsWith('/glamcampro')
+    ) {
+      return `/glamcampro/${cleanPath}`;
+    }
+  }
+
+  const base = import.meta.env.BASE_URL || '/';
+  const prefix = base.endsWith('/') ? base : `${base}/`;
+  return `${prefix}${cleanPath}`;
 }
