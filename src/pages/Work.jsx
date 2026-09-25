@@ -23,24 +23,28 @@ export default function Work({ onSelectProject, onOpenBookModal }) {
       </div>
 
       {/* Projects Grid */}
-      <div className="grid grid-cols-2 gap-3 sm:gap-6 max-w-5xl mx-auto pt-6 border-t border-white/5">
-        {PROJECTS.map((project) => (
+      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-6 max-w-5xl mx-auto pt-6 border-t border-white/5">
+        {PROJECTS.map((project, index) => (
           <div
             key={project.id}
-            className="relative overflow-hidden bg-[#111]"
+            onClick={() => onSelectProject(index)}
+            className="relative overflow-hidden bg-[#111] cursor-pointer group rounded-lg transition-transform duration-500 hover:shadow-2xl"
+            role="button"
+            tabIndex={0}
+            aria-label="Open reel"
           >
             <div className="relative aspect-[9/16] w-full overflow-hidden">
               {project.videoUrl ? (
                 <InlineReelVideo
                   src={project.videoUrl}
                   poster={project.coverImage}
-                  className="w-full h-full object-cover pointer-events-none select-none"
+                  className="w-full h-full object-cover pointer-events-none select-none group-hover:scale-105 transition-transform duration-700 ease-out"
                 />
               ) : (
                 <img
                   src={project.coverImage}
-                  alt={project.title}
-                  className="w-full h-full object-cover select-none"
+                  alt=""
+                  className="w-full h-full object-cover select-none group-hover:scale-105 transition-transform duration-700 ease-out"
                 />
               )}
             </div>

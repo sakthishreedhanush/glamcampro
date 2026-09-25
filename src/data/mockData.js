@@ -64,6 +64,38 @@ export const PROJECTS = [
     featured: false,
     stats: { metric: "BTS", label: "Studio Operations" },
     deliverables: ["Behind-The-Scenes Footage", "Operator Directing", "Equipment Rigging"]
+  },
+  {
+    id: "amanda-sukhleen-bts",
+    title: "Amanda & Sukhleen - BTS",
+    subtitle: "Behind The Scenes",
+    category: "Behind The Scenes",
+    industry: "Fashion & Events",
+    year: "2026",
+    client: "The GlamCam Pro",
+    description: "Multi-talent motion capture and synchronized Glamcam speed ramping choreography.",
+    coverImage: getAssetUrl("glambot_1.jpeg"),
+    videoUrl: getAssetUrl("Amanda_Sukhleen01_BTS_edited.mp4"),
+    tags: ["Behind The Scenes", "Glamcam", "Choreography"],
+    featured: false,
+    stats: { metric: "BTS", label: "Dual Subject Tracking" },
+    deliverables: ["Dual Subject Framing", "Behind-The-Scenes Cut"]
+  },
+  {
+    id: "sahil-glamcam",
+    title: "Sahil - Master Cut",
+    subtitle: "Special Edition",
+    category: "Glamcam Reel",
+    industry: "Commercial",
+    year: "2026",
+    client: "The GlamCam Pro",
+    description: "High precision cinematic sweep featuring high contrast spotlighting and instant replay.",
+    coverImage: getAssetUrl("glambot_2.jpeg"),
+    videoUrl: getAssetUrl("Sahil01_Glamcam_final.mp4"),
+    tags: ["Glamcam Reel", "Commercial", "Master Cut"],
+    featured: true,
+    stats: { metric: "4K", label: "Master Cut" },
+    deliverables: ["Master Grading", "Speed Ramping"]
   }
 ];
 

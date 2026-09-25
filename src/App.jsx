@@ -5,6 +5,7 @@ import ShowreelModal from './components/ShowreelModal';
 import ProjectModal from './components/ProjectModal';
 import BookCallModal from './components/BookCallModal';
 import Home from './pages/Home';
+import { PROJECTS } from './data/mockData';
 
 export default function App() {
   const [selectedProject, setSelectedProject] = useState(null);
@@ -15,6 +16,17 @@ export default function App() {
   const handleOpenShowreel = (index = 0) => {
     setShowreelIndex(index);
     setShowreelOpen(true);
+  };
+
+  const handleSelectProject = (projOrIndex) => {
+    if (typeof projOrIndex === 'number') {
+      handleOpenShowreel(projOrIndex);
+    } else if (projOrIndex && projOrIndex.id) {
+      const idx = PROJECTS.findIndex(p => p.id === projOrIndex.id);
+      handleOpenShowreel(idx >= 0 ? idx : 0);
+    } else {
+      handleOpenShowreel(0);
+    }
   };
 
   return (
@@ -29,7 +41,7 @@ export default function App() {
       <main className="flex-1">
         <Home
           onOpenShowreel={handleOpenShowreel}
-          onSelectProject={(proj) => setSelectedProject(proj)}
+          onSelectProject={handleSelectProject}
           onOpenBookModal={() => setBookModalOpen(true)}
         />
       </main>

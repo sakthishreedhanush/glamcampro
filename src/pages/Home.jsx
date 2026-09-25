@@ -1,6 +1,6 @@
 import React from 'react';
 import { PROJECTS, SERVICES } from '../data/mockData';
-import { Play, ArrowUpRight, ArrowRight } from 'lucide-react';
+import { Play } from 'lucide-react';
 import InlineReelVideo from '../components/InlineReelVideo';
 import { getAssetUrl } from '../utils/assets';
 
@@ -43,19 +43,23 @@ export default function Home({ onOpenShowreel, onSelectProject, onOpenBookModal 
             </span>
 
             <h1 className="hero-heading">
-              Capturing every<br />
-              moment with <em>Glamcam</em>
+              Make Every Moment<br />
+              <em>Cinematic</em>
             </h1>
 
-            <p className="hero-subtitle text-neutral-300 max-w-xl text-lg md:text-xl font-light leading-relaxed">
-              We transform ordinary moments into cinematic experiences using precision Glamcam technology and stunning slow-motion detail.
+            <p className="hero-subtitle text-neutral-200 max-w-2xl text-lg md:text-xl font-light leading-relaxed">
+              An extraordinary slow-motion experience, designed to be seen, shared and remembered.
+            </p>
+
+            <p className="text-sm md:text-base text-neutral-400 max-w-2xl leading-relaxed font-light">
+              Step into the spotlight and experience the magic of cinematic slow motion. From weddings and celebrations to sports and brand activations, The Glam Cam Pro transforms ordinary moments into extraordinary visual experiences—crafted to captivate, connect and be shared.
             </p>
           </div>
         </div>
       </section>
 
-      {/* HERO VIDEO REELS */}
-      <section className="max-w-7xl mx-auto px-6 md:px-12 pb-20 md:pb-32">
+      {/* HERO VIDEO REELS — Clickable to pop up, zero name or text on reel */}
+      <section className="max-w-7xl mx-auto px-6 md:px-12 pb-20 md:pb-32 border-b border-white/5">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           {[
             { src: getAssetUrl('AMANDA_REEL7_GLAMBOT.mp4'), poster: getAssetUrl('glambot_1.jpeg') },
@@ -64,46 +68,32 @@ export default function Home({ onOpenShowreel, onSelectProject, onOpenBookModal 
           ].map((item, i) => (
             <div
               key={i}
-              className="relative overflow-hidden bg-[#111]"
+              onClick={() => onOpenShowreel(i)}
+              className="relative overflow-hidden bg-[#111] cursor-pointer group rounded-lg transition-transform duration-500 hover:shadow-2xl"
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') onOpenShowreel(i); }}
+              aria-label="Open reel"
             >
               <div className="relative aspect-[9/16] w-full overflow-hidden">
                 <InlineReelVideo
                   src={item.src}
                   poster={item.poster}
-                  className="w-full h-full object-cover pointer-events-none select-none"
+                  className="w-full h-full object-cover pointer-events-none select-none group-hover:scale-105 transition-transform duration-700 ease-out"
                 />
+                {/* Subtle Play Icon Hint on Hover — NO name, NO text */}
+                <div className="absolute inset-0 bg-black/25 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center pointer-events-none">
+                  <div className="w-12 h-12 rounded-full bg-black/60 backdrop-blur-md border border-white/20 flex items-center justify-center text-white shadow-xl transform scale-90 group-hover:scale-100 transition-transform duration-300">
+                    <Play className="w-5 h-5 fill-current ml-0.5 text-[#c8a97e]" />
+                  </div>
+                </div>
               </div>
             </div>
           ))}
         </div>
       </section>
 
-      {/* BRAND STATEMENT */}
-      <section className="max-w-7xl mx-auto px-6 md:px-12 py-24 md:py-36 border-b border-white/5">
-        <div className="max-w-4xl mx-auto text-center space-y-8 md:space-y-10">
-          
-          <span className="label-gold inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-[#c8a97e]/10 border border-[#c8a97e]/20 backdrop-blur-md">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#c8a97e]" />
-            The Experience
-          </span>
-
-          <h2 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light text-white tracking-tight uppercase leading-[1.1]">
-            Make Every Moment <em className="text-[#c8a97e] italic">Cinematic</em>
-          </h2>
-
-          <p className="font-display text-xl sm:text-2xl md:text-3xl font-light text-neutral-300 max-w-3xl mx-auto leading-relaxed tracking-wide">
-            An extraordinary slow-motion experience, designed to be seen, shared and remembered.
-          </p>
-
-          <div className="w-16 h-[1px] bg-[#c8a97e]/40 mx-auto my-6" />
-
-          <p className="text-sm md:text-base text-neutral-400 max-w-2xl mx-auto leading-relaxed font-light">
-            Step into the spotlight and experience the magic of cinematic slow motion. From weddings and celebrations to sports and brand activations, The Glam Cam Pro transforms ordinary moments into extraordinary visual experiences—crafted to captivate, connect and be shared.
-          </p>
-        </div>
-      </section>
-
-      {/* FEATURED WORK */}
+      {/* FEATURED WORK / RECENT PROJECTS REELS — Clickable to pop up, zero name or text on reel */}
       <section id="work" className="max-w-7xl mx-auto px-6 md:px-12 pb-32">
         <div className="flex items-end justify-between mb-14 pb-8 border-b border-white/5">
           <div>
@@ -114,26 +104,37 @@ export default function Home({ onOpenShowreel, onSelectProject, onOpenBookModal 
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-3 sm:gap-6 max-w-5xl mx-auto">
-          {PROJECTS.map((project) => (
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-6 max-w-5xl mx-auto">
+          {PROJECTS.map((project, index) => (
             <div
               key={project.id}
-              className="relative overflow-hidden bg-[#111]"
+              onClick={() => onOpenShowreel(index)}
+              className="relative overflow-hidden bg-[#111] cursor-pointer group rounded-lg transition-transform duration-500 hover:shadow-2xl"
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') onOpenShowreel(index); }}
+              aria-label="Open reel"
             >
               <div className="relative aspect-[9/16] w-full overflow-hidden">
                 {project.videoUrl ? (
                   <InlineReelVideo
                     src={project.videoUrl}
                     poster={project.coverImage}
-                    className="w-full h-full object-cover pointer-events-none select-none"
+                    className="w-full h-full object-cover pointer-events-none select-none group-hover:scale-105 transition-transform duration-700 ease-out"
                   />
                 ) : (
                   <img
                     src={project.coverImage}
-                    alt={project.title}
-                    className="w-full h-full object-cover select-none"
+                    alt=""
+                    className="w-full h-full object-cover select-none group-hover:scale-105 transition-transform duration-700 ease-out"
                   />
                 )}
+                {/* Subtle Play Icon Hint on Hover — NO name, NO text */}
+                <div className="absolute inset-0 bg-black/25 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center pointer-events-none">
+                  <div className="w-12 h-12 rounded-full bg-black/60 backdrop-blur-md border border-white/20 flex items-center justify-center text-white shadow-xl transform scale-90 group-hover:scale-100 transition-transform duration-300">
+                    <Play className="w-5 h-5 fill-current ml-0.5 text-[#c8a97e]" />
+                  </div>
+                </div>
               </div>
             </div>
           ))}
