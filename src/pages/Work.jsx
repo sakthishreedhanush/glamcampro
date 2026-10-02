@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { PROJECTS } from '../data/mockData';
-import InlineReelVideo from '../components/InlineReelVideo';
-import { getAssetUrl } from '../utils/assets';
+import ReelCard from '../components/ReelCard';
 
 export default function Work({ onSelectProject, onOpenBookModal }) {
+  const [activeReelId, setActiveReelId] = useState(null);
+  const [isGlobalMuted, setIsGlobalMuted] = useState(false);
 
   return (
     <div className="pt-32 pb-24 max-w-7xl mx-auto px-6 md:px-12 space-y-16">
@@ -24,31 +25,17 @@ export default function Work({ onSelectProject, onOpenBookModal }) {
 
       {/* Projects Grid */}
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-6 max-w-5xl mx-auto pt-6 border-t border-white/5">
-        {PROJECTS.map((project, index) => (
-          <div
+        {PROJECTS.map((project) => (
+          <ReelCard
             key={project.id}
-            onClick={() => onSelectProject(index)}
-            className="relative overflow-hidden bg-[#111] cursor-pointer group rounded-lg transition-transform duration-500 hover:shadow-2xl"
-            role="button"
-            tabIndex={0}
-            aria-label="Open reel"
-          >
-            <div className="relative aspect-[9/16] w-full overflow-hidden">
-              {project.videoUrl ? (
-                <InlineReelVideo
-                  src={project.videoUrl}
-                  poster={project.coverImage}
-                  className="w-full h-full object-cover pointer-events-none select-none group-hover:scale-105 transition-transform duration-700 ease-out"
-                />
-              ) : (
-                <img
-                  src={project.coverImage}
-                  alt=""
-                  className="w-full h-full object-cover select-none group-hover:scale-105 transition-transform duration-700 ease-out"
-                />
-              )}
-            </div>
-          </div>
+            id={`work-page-${project.id}`}
+            src={project.videoUrl}
+            poster={project.coverImage}
+            activeReelId={activeReelId}
+            onActivate={setActiveReelId}
+            isGlobalMuted={isGlobalMuted}
+            onToggleMute={setIsGlobalMuted}
+          />
         ))}
       </div>
 

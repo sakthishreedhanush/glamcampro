@@ -6,32 +6,32 @@ const DEFAULT_REELS = [
   {
     id: "amanda-reel-7",
     videoUrl: getAssetUrl("AMANDA_REEL7_GLAMBOT.mp4"),
-    poster: getAssetUrl("glambot_1.jpeg")
+    poster: getAssetUrl("poster_amanda.jpg")
   },
   {
     id: "basketball-reel",
     videoUrl: getAssetUrl("BASKETBALL_REEL_2_GLAMBOT.mp4"),
-    poster: getAssetUrl("glambot_2.jpeg")
+    poster: getAssetUrl("poster_basketball.jpg")
   },
   {
     id: "sukhleen-reel-444",
     videoUrl: getAssetUrl("SUKHLEEN_REEL_444_GLAMBOT.mp4"),
-    poster: getAssetUrl("glambot_3.jpeg")
+    poster: getAssetUrl("poster_sukhleen.jpg")
   },
   {
     id: "amanda-bts",
     videoUrl: getAssetUrl("Amanda01_BTS_edited.mp4"),
-    poster: getAssetUrl("glambot.jpeg")
+    poster: getAssetUrl("poster_amanda_bts.jpg")
   },
   {
     id: "amanda-sukhleen-bts",
     videoUrl: getAssetUrl("Amanda_Sukhleen01_BTS_edited.mp4"),
-    poster: getAssetUrl("glambot_1.jpeg")
+    poster: getAssetUrl("poster_amanda_sukhleen_bts.jpg")
   },
   {
     id: "sahil-glamcam",
     videoUrl: getAssetUrl("Sahil01_Glamcam_final.mp4"),
-    poster: getAssetUrl("glambot_2.jpeg")
+    poster: getAssetUrl("poster_sahil.jpg")
   }
 ];
 

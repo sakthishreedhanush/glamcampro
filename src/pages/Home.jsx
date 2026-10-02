@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { PROJECTS, SERVICES } from '../data/mockData';
-import { Play } from 'lucide-react';
 import InlineReelVideo from '../components/InlineReelVideo';
+import ReelCard from '../components/ReelCard';
 import { getAssetUrl } from '../utils/assets';
 
 export default function Home({ onOpenShowreel, onSelectProject, onOpenBookModal }) {
+  const [activeReelId, setActiveReelId] = useState(null);
+  const [isGlobalMuted, setIsGlobalMuted] = useState(false);
 
   const scrollToWork = () => {
     const el = document.getElementById('work');
@@ -18,12 +20,13 @@ export default function Home({ onOpenShowreel, onSelectProject, onOpenBookModal 
 
       {/* HERO */}
       <section className="relative w-full overflow-hidden pt-32 md:pt-40 pb-28 md:pb-40 border-b border-white/5">
-        {/* HERO BACKGROUND VIDEO */}
+        {/* HERO BACKGROUND VIDEO — Paused automatically when any reel is touched/playing */}
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none select-none">
           <InlineReelVideo
             src="BASKETBALL_REEL_2_GLAMBOT.mp4"
-            poster="glambot_2.jpeg"
+            poster="poster_basketball.jpg"
             loopDuration={5}
+            isPaused={!!activeReelId}
             className="w-full h-full object-cover opacity-75 scale-105"
           />
         </div>
@@ -58,43 +61,30 @@ export default function Home({ onOpenShowreel, onSelectProject, onOpenBookModal 
         </div>
       </section>
 
-      {/* HERO VIDEO REELS — Clickable to pop up, zero name or text on reel */}
-      <section className="max-w-7xl mx-auto px-6 md:px-12 pb-20 md:pb-32 border-b border-white/5">
+      {/* HERO VIDEO REELS — Touch to play from start, other videos pause, NO pop up modal */}
+      <section id="reels" className="max-w-7xl mx-auto px-6 md:px-12 pb-20 md:pb-32 border-b border-white/5 scroll-mt-28">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           {[
-            { src: getAssetUrl('AMANDA_REEL7_GLAMBOT.mp4'), poster: getAssetUrl('glambot_1.jpeg') },
-            { src: getAssetUrl('BASKETBALL_REEL_2_GLAMBOT.mp4'), poster: getAssetUrl('glambot_2.jpeg') },
-            { src: getAssetUrl('SUKHLEEN_REEL_444_GLAMBOT.mp4'), poster: getAssetUrl('glambot_3.jpeg') }
-          ].map((item, i) => (
-            <div
-              key={i}
-              onClick={() => onOpenShowreel(i)}
-              className="relative overflow-hidden bg-[#111] cursor-pointer group rounded-lg transition-transform duration-500 hover:shadow-2xl"
-              role="button"
-              tabIndex={0}
-              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') onOpenShowreel(i); }}
-              aria-label="Open reel"
-            >
-              <div className="relative aspect-[9/16] w-full overflow-hidden">
-                <InlineReelVideo
-                  src={item.src}
-                  poster={item.poster}
-                  className="w-full h-full object-cover pointer-events-none select-none group-hover:scale-105 transition-transform duration-700 ease-out"
-                />
-                {/* Subtle Play Icon Hint on Hover — NO name, NO text */}
-                <div className="absolute inset-0 bg-black/25 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center pointer-events-none">
-                  <div className="w-12 h-12 rounded-full bg-black/60 backdrop-blur-md border border-white/20 flex items-center justify-center text-white shadow-xl transform scale-90 group-hover:scale-100 transition-transform duration-300">
-                    <Play className="w-5 h-5 fill-current ml-0.5 text-[#c8a97e]" />
-                  </div>
-                </div>
-              </div>
-            </div>
+            { id: 'hero-reel-amanda', src: 'AMANDA_REEL7_GLAMBOT.mp4', poster: 'poster_amanda.jpg' },
+            { id: 'hero-reel-basketball', src: 'BASKETBALL_REEL_2_GLAMBOT.mp4', poster: 'poster_basketball.jpg' },
+            { id: 'hero-reel-sukhleen', src: 'SUKHLEEN_REEL_444_GLAMBOT.mp4', poster: 'poster_sukhleen.jpg' }
+          ].map((item) => (
+            <ReelCard
+              key={item.id}
+              id={item.id}
+              src={item.src}
+              poster={item.poster}
+              activeReelId={activeReelId}
+              onActivate={setActiveReelId}
+              isGlobalMuted={isGlobalMuted}
+              onToggleMute={setIsGlobalMuted}
+            />
           ))}
         </div>
       </section>
 
-      {/* FEATURED WORK / RECENT PROJECTS REELS — Clickable to pop up, zero name or text on reel */}
-      <section id="work" className="max-w-7xl mx-auto px-6 md:px-12 pb-32">
+      {/* FEATURED WORK / RECENT PROJECTS REELS — Touch to play from start, other videos pause, NO pop up modal */}
+      <section id="work" className="max-w-7xl mx-auto px-6 md:px-12 pb-32 scroll-mt-28">
         <div className="flex items-end justify-between mb-14 pb-8 border-b border-white/5">
           <div>
             <span className="label-gold mb-4 block">Selected Work</span>
@@ -105,38 +95,17 @@ export default function Home({ onOpenShowreel, onSelectProject, onOpenBookModal 
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-6 max-w-5xl mx-auto">
-          {PROJECTS.map((project, index) => (
-            <div
+          {PROJECTS.map((project) => (
+            <ReelCard
               key={project.id}
-              onClick={() => onOpenShowreel(index)}
-              className="relative overflow-hidden bg-[#111] cursor-pointer group rounded-lg transition-transform duration-500 hover:shadow-2xl"
-              role="button"
-              tabIndex={0}
-              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') onOpenShowreel(index); }}
-              aria-label="Open reel"
-            >
-              <div className="relative aspect-[9/16] w-full overflow-hidden">
-                {project.videoUrl ? (
-                  <InlineReelVideo
-                    src={project.videoUrl}
-                    poster={project.coverImage}
-                    className="w-full h-full object-cover pointer-events-none select-none group-hover:scale-105 transition-transform duration-700 ease-out"
-                  />
-                ) : (
-                  <img
-                    src={project.coverImage}
-                    alt=""
-                    className="w-full h-full object-cover select-none group-hover:scale-105 transition-transform duration-700 ease-out"
-                  />
-                )}
-                {/* Subtle Play Icon Hint on Hover — NO name, NO text */}
-                <div className="absolute inset-0 bg-black/25 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center pointer-events-none">
-                  <div className="w-12 h-12 rounded-full bg-black/60 backdrop-blur-md border border-white/20 flex items-center justify-center text-white shadow-xl transform scale-90 group-hover:scale-100 transition-transform duration-300">
-                    <Play className="w-5 h-5 fill-current ml-0.5 text-[#c8a97e]" />
-                  </div>
-                </div>
-              </div>
-            </div>
+              id={`work-reel-${project.id}`}
+              src={project.videoUrl}
+              poster={project.coverImage}
+              activeReelId={activeReelId}
+              onActivate={setActiveReelId}
+              isGlobalMuted={isGlobalMuted}
+              onToggleMute={setIsGlobalMuted}
+            />
           ))}
         </div>
       </section>

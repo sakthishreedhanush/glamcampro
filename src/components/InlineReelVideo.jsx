@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import { getAssetUrl } from '../utils/assets';
 
-export default function InlineReelVideo({ src, poster, className = "", loopDuration }) {
+export default function InlineReelVideo({ src, poster, className = "", loopDuration, isPaused = false }) {
   const videoRef = useRef(null);
 
   const resolvedSrc = getAssetUrl(src);
@@ -10,6 +10,11 @@ export default function InlineReelVideo({ src, poster, className = "", loopDurat
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
+
+    if (isPaused) {
+      video.pause();
+      return;
+    }
 
     video.muted = true;
     video.defaultMuted = true;
@@ -33,7 +38,7 @@ export default function InlineReelVideo({ src, poster, className = "", loopDurat
       video.removeEventListener('loadeddata', playVideo);
       video.removeEventListener('canplay', playVideo);
     };
-  }, [resolvedSrc]);
+  }, [resolvedSrc, isPaused]);
 
   const handleTimeUpdate = (e) => {
     if (loopDuration && e.currentTarget.currentTime >= loopDuration) {
