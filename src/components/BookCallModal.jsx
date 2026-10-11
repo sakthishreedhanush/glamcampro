@@ -234,15 +234,15 @@ export default function BookCallModal({ isOpen, onClose }) {
               </div>
 
               {/* Action Buttons */}
-              <div className="pt-2 flex items-center justify-between">
-                <span className="text-[11px] text-neutral-500">
+              <div className="pt-2 flex flex-col-reverse sm:flex-row sm:items-center sm:justify-between gap-3">
+                <span className="text-[11px] text-neutral-500 text-center sm:text-left">
                   Direct recipient: <span className="text-neutral-400">palfsmediapro@gmail.com</span>
                 </span>
 
                 <button 
                   type="submit" 
                   disabled={isSubmitting}
-                  className="btn-primary text-[11px] py-4 px-8 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="btn-primary text-[10px] sm:text-[11px] py-3.5 px-6 sm:py-4 sm:px-8 w-full sm:w-auto justify-center disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer active:scale-95 transition-all shadow-lg"
                 >
                   <span>{isSubmitting ? "Sending..." : "Submit Booking"}</span>
                   <Send className="w-3.5 h-3.5" />

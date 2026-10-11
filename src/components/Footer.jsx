@@ -17,7 +17,7 @@ export default function Footer({ onOpenBookModal }) {
           </div>
           <button
             onClick={onOpenBookModal}
-            className="btn-primary text-[11px] py-4 px-8 flex-shrink-0"
+            className="btn-primary text-[10px] sm:text-[11px] py-3.5 px-6 sm:py-4 sm:px-8 w-full sm:w-auto justify-center flex-shrink-0 cursor-pointer active:scale-95 transition-all shadow-lg"
           >
             <span>PLAN YOUR EXPERIENCE</span>
             <ArrowUpRight className="w-3.5 h-3.5" />

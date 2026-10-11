@@ -255,13 +255,13 @@ export default function ReelCard({
 
         {/* TOP QUICK CONTROLS (Only visible on the active reel) */}
         {isActive && (
-          <div className="absolute top-3 left-3 right-3 flex items-center justify-between z-20 pointer-events-none animate-fadeIn">
+          <div className="absolute top-2.5 left-2.5 right-2.5 sm:top-3 sm:left-3 sm:right-3 flex items-center justify-between z-20 pointer-events-none animate-fadeIn">
             {/* Play from Start / Restart Button */}
             <button
               type="button"
               data-reel-control="true"
               onClick={handleRestart}
-              className="pointer-events-auto w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-black/70 backdrop-blur-md border border-white/20 flex items-center justify-center text-white/90 hover:text-[#c8a97e] hover:border-[#c8a97e]/60 transition-all shadow-lg active:scale-95 group/btn cursor-pointer"
+              className="pointer-events-auto w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-black/80 backdrop-blur-md border border-white/25 flex items-center justify-center text-white/90 hover:text-[#c8a97e] hover:border-[#c8a97e]/60 transition-all shadow-lg active:scale-90 group/btn cursor-pointer"
               aria-label="Restart from start"
               title="Play from start"
             >
@@ -269,13 +269,13 @@ export default function ReelCard({
             </button>
 
             {/* Right Quick Controls: Sound toggle & Close/Minimize */}
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1.5 sm:gap-2">
               {/* Audio Toggle Button */}
               <button
                 type="button"
                 data-reel-control="true"
                 onClick={handleToggleSound}
-                className="pointer-events-auto w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-black/70 backdrop-blur-md border border-white/20 flex items-center justify-center text-white/90 hover:text-[#c8a97e] hover:border-[#c8a97e]/60 transition-all shadow-lg active:scale-95 cursor-pointer"
+                className="pointer-events-auto w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-black/80 backdrop-blur-md border border-white/25 flex items-center justify-center text-white/90 hover:text-[#c8a97e] hover:border-[#c8a97e]/60 transition-all shadow-lg active:scale-90 cursor-pointer"
                 aria-label={isGlobalMuted ? "Unmute reel" : "Mute reel"}
                 title={isGlobalMuted ? "Unmute" : "Mute"}
               >
@@ -291,7 +291,7 @@ export default function ReelCard({
                 type="button"
                 data-reel-control="true"
                 onClick={handleClose}
-                className="pointer-events-auto w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-black/70 backdrop-blur-md border border-white/20 flex items-center justify-center text-white/90 hover:text-[#c8a97e] hover:border-[#c8a97e]/60 transition-all shadow-lg active:scale-95 cursor-pointer"
+                className="pointer-events-auto w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-black/80 backdrop-blur-md border border-white/25 flex items-center justify-center text-white/90 hover:text-[#c8a97e] hover:border-[#c8a97e]/60 transition-all shadow-lg active:scale-90 cursor-pointer"
                 aria-label="Close reel"
                 title="Close"
               >
